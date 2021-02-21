@@ -19,33 +19,39 @@ def query_tickers(industry):
     # load tickers
     dow = si.tickers_dow()
     dow_set = set(dow)
-    if industry == "Business & Commerce": 
-        companies = ["AMZN","TSLA","HD","LOW","MCD","SBUX","NKE","WMT","COST","PG","PEP","KO"]
+    if industry == "Business & Commerce":
+        companies = ["AMZN", "TSLA", "HD", "LOW", "MCD",
+                     "SBUX", "NKE", "WMT", "COST", "PG", "PEP", "KO"]
         companies_set = set(companies)
         non_dupes = list(companies_set - dow_set)
         tickers = dow + non_dupes
     elif industry == "Healthcare Professions & Pharmacology Programs":
-        companies = ["JNJ","MRK","ABBV","PFE","LLY","AMGN","GILD","ABT","TMO","DHR","REGN","UNH"]
+        companies = ["JNJ", "MRK", "ABBV", "PFE", "LLY",
+                     "AMGN", "GILD", "ABT", "TMO", "DHR", "REGN", "UNH"]
         companies_set = set(companies)
         non_dupes = list(companies_set - dow_set)
         tickers = dow + non_dupes
     elif industry == "Biological & Biomedical Sciences":
-        companies = ["AMZN","TSLA","HD","LOW","MCD","SBUX","NKE","WMT","COST","PG","PEP","KO"]
+        companies = ["AMZN", "TSLA", "HD", "LOW", "MCD",
+                     "SBUX", "NKE", "WMT", "COST", "PG", "PEP", "KO"]
         companies_set = set(companies)
         non_dupes = list(companies_set - dow_set)
         tickers = dow + non_dupes
     elif industry == "Engineering & Technology":
-        companies = ["AMAT","TSLA","ADBE","CSCO","NVDA","AVGO","IBM","AMD","TXN","QCOM","INTC","CRM"]
+        companies = ["AMAT", "TSLA", "ADBE", "CSCO", "NVDA",
+                     "AVGO", "IBM", "AMD", "TXN", "QCOM", "INTC", "CRM"]
         companies_set = set(companies)
         non_dupes = list(companies_set - dow_set)
         tickers = dow + non_dupes
     elif industry == "Energy & Infrastructure":
-        companies = ["XOM","CVX","COP","EOG","PSX","MPC","SPG","NEE","DUK","LIN","APD","SRE"]
+        companies = ["XOM", "CVX", "COP", "EOG", "PSX",
+                     "MPC", "SPG", "NEE", "DUK", "LIN", "APD", "SRE"]
         companies_set = set(companies)
         non_dupes = list(companies_set - dow_set)
         tickers = dow + non_dupes
     elif industry == "Communication, Journalism & Related Programs":
-        companies = ["GOOGL","FB","T","VZ","TMUS","ATVI","NFLX","DIS","CMCSA","CHTR","EA","LYV"]
+        companies = ["GOOGL", "FB", "T", "VZ", "TMUS", "ATVI",
+                     "NFLX", "DIS", "CMCSA", "CHTR", "EA", "LYV"]
         companies_set = set(companies)
         non_dupes = list(companies_set - dow_set)
         tickers = dow + non_dupes
@@ -169,19 +175,25 @@ def sentiment_analysis(scrubbed_news):
     return df_results
 
 
-def print_results(df_results):
+def return_results(df_results):
+    results = {}
     for i in range(0, len(df_results)):
         if df_results["Recommendation"][i] <= 1.5:
-            print("Buy: " + df_results['ticker'][i])
+            results[df_results['ticker'][i]] = "BUY"
         elif df_results["Recommendation"][i] >= 4.5:
-            print("Sell: " + df_results['ticker'][i])
+            results[df_results['ticker'][i]] = "SELL"
         elif df_results["Recommendation"][i] == 3:
-            print("Hold: " + df_results['ticker'][i])
-    return
+            results[df_results['ticker'][i]] = "HOLD"
+    return list(results.keys())
+
+
+def investment_portfolio(industry):
+    tickers = query_tickers(industry)
+    news = scrub_news(tickers)
+    df_results = sentiment_analysis(news)
+
+    return df_results
 
 
 if __name__ == "__main__":
-    tickers = query_tickers(None)
-    news = scrub_news(tickers)
-    results = sentiment_analysis(news)
-    print_results(results)
+    print(return_results(investment_portfolio("Business & Commerce")))
