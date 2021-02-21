@@ -6,7 +6,7 @@
 
 The COVID-19 pandemic has forever changed the lives of billions of people across the world. As a direct result of the economic shutdown that followed the pandemic, the unemployment rate in Canada more than doubled from 5.6% in February 2020 to a record high 13.7% in May 2020 [1]. With so many jobs lost, many people found themselves without their pre-pandemic financial support. An emergency savings fund that one would accumulate throughout their career can drastically reduce the financial impacts of such a disaster. Additionally, along with the ever-increasing popularity of freelance work amongst students, it is all-the-more important to cultivate a sense of financial literacy with savings and investments.
 
-Savings.io is a webapp designed to strategically help students and others set aside a small amount of money each month towards an emergency savings fund. It also advocates for financial investment education by providing resources and links to guides and articles. Finally, it is able to return US securities determined through a ML model to be performing "well", which acts as a good starting point for beginner traders.
+Savings.io is a webapp designed to strategically help students and others set aside a small amount of money each month towards an emergency savings fund through the use of an extensive cost-of-living dataset. It also advocates for financial investment education by providing resources and links to guides and articles. Finally, it is able to return US securities determined through a ML sentiment analysis model (VADER) to be performing "well", which acts as a good starting point for beginner traders.
 
 [![Python](https://ForTheBadge.com/images/badges/made-with-python.svg)](https://colab.research.google.com/)
 
