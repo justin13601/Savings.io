@@ -59,3 +59,7 @@ Access webapp at indicated localhost address.
 
 ## References
 [1] Government of Canada, Statistics Canada, “The Daily — Labour Force Survey, September 2020,” Statcan.gc.ca, 2020. https://www150.statcan.gc.ca/n1/daily-quotidien/201009/dq201009a-eng.htm (accessed Feb. 21, 2021).
+
+[2] “VADER Sentiment Analysis in Algorithmic Trading,” QuantInsti, May 21, 2020. https://blog.quantinsti.com/vader-sentiment/ (accessed Feb. 21, 2021).
+
+[3] Keaton Maruya-Li, “Stock Price Prediction Using Sentiment Analysis and Historical Stock Data,” Medium, Oct. 27, 2020. https://medium.com/swlh/stock-price-prediction-using-sentiment-analysis-and-historical-stock-data-587488db8576 (accessed Feb. 21, 2021).
