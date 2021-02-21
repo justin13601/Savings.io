@@ -59,3 +59,4 @@ Access webapp at indicated localhost address.
 
 ## References
 [1] Government of Canada, Statistics Canada, “The Daily — Labour Force Survey, September 2020,” Statcan.gc.ca, 2020. https://www150.statcan.gc.ca/n1/daily-quotidien/201009/dq201009a-eng.htm (accessed Feb. 21, 2021).
+[2] https://rapidapi.com/ditno-ditno-default/api/cities-cost-of-living1/details
