@@ -18,7 +18,7 @@ nltk.download('vader_lexicon')
 def query_tickers(industry):
     ################# add in ticker interests based on major ################
     # load tickers
-    tickers = si.tickers_sp500()
+    tickers = si.tickers_dow()
 
     yahoo_recommendations = []
 
@@ -63,7 +63,7 @@ def query_tickers(industry):
     df_hold = df[df.Recommendations == 3]
 
     # combine dataframes (for experienced investor who understands buys/sells/holds)
-    df_final = pd.concat([hold_df, buy_df, sell_df])
+    df_final = pd.concat([df_hold, df_buy, df_sell])
     df_final.reset_index(level=0, inplace=True)
 
     return df_final
@@ -88,7 +88,7 @@ def scrub_news(df_final):
         response = urlopen(request)
 
         # html resposne returning news-table
-        html = BeautifulSoup(response)
+        html = BeautifulSoup(response, features="lxml")
         result = html.find(id='news-table')
 
         news[each_ticker] = result
@@ -120,6 +120,33 @@ def scrub_news(df_final):
     scrubbed_news['Recommendation'] = pd.to_numeric(
         scrubbed_news['Recommendation'])
 
+    return scrubbed_news
+
+
+def sentiment_analysis(scrubbed_news):
+    # compute VADER compound score
+    scores = scrubbed_news['headlines'].apply(
+        SentimentIntensityAnalyzer().polarity_scores).tolist()
+
+    # combine into one dataframe and sort for results
+    df_with_scores = pd.DataFrame(scores)
+    df_results = scrubbed_news.join(df_with_scores, rsuffix='_right')
+    df_results.sort_values(by='compound', ascending=False, inplace=True)
+    df_results.reset_index(level=0, inplace=True)
+
+    return df_results
+
+
+def print_results(df_results):
+    for i in range(0, len(df_results)):
+        if df_results["Recommendation"][i] <= 1.5:
+            print("Buy: " + df_results['ticker'][i])
+        elif df_results["Recommendation"][i] >= 4.5:
+            print("Sell: " + df_results['ticker'][i])
+        elif df_results["Recommendation"][i] == 3:
+            print("Hold: " + df_results['ticker'][i])
+    return
+
 
 '''
 Business & Commerce
@@ -130,3 +157,8 @@ Engineering & Technology
 Energy & Infrastructure
 Communication, Journalism & Related Programs
 '''
+if __name__ == "__main__":
+    tickers = query_tickers(None)
+    news = scrub_news(tickers)
+    results = sentiment_analysis(news)
+    print_results(results)
