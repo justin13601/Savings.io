@@ -8,27 +8,55 @@
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+{#    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js%22%3E"</script>#}
+{#    <script src="https://cdnjs.cloudflare.com/ajax/libs/hammer.js/2.0.8/hammer.min.js%22%3E"</script>#}
 
 </head>
 <body>
+
+
+
+
 <div class="top" style="background: #0e3560; height: 10vh; text-align: center; padding: 20px">
 {% if name %}
     <h1 class="nametitle">{{ name }}'s portfolio</h1>
 {% else %}
     <h1 class="nametitle">Your portfolio</h1>
 {% endif %}</div>
-<div class="box"></div>
+<div class="box" style="position: absolute"></div>
 
-<div class="container-fluid" style="max-width: 1600px; margin-top: 5vh">
+{#<div class="animation-area">#}
+{#		<ul class="box-area">#}
+{#			<li></li>#}
+{#			<li></li>#}
+{#			<li></li>#}
+{##}
+{#		</ul>#}
+{#	</div>#}
+
+<nav class="navbar" >
+        <div class="max-width">
+
+<ul class="menu" >
+    <li><a href="#DS" class="menu-btn">Budget</a></li>
+    <li><a href="#ML" class="menu-btn">Stock</a></li>
+</ul>
+
+</div>
+</nav>
+
+<div class="container-fluid" style="max-width: 1600px; ">
+    <h1 style="text-align: center">Budget</h1>
     <div class="row">
         <div class="col">
             <div class="col-md">
                 <div class="card text-center  mb-3" id="total-assignments">
                     <div class="card-header">
-                        <h5 class="card-title">Emergency Funds?</h5>
+                        <h5 class="card-title" id="DS">Emergency Funds</h5>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title">a personal budget set aside as a financial safety net for future mishaps or unexpected expenses.</h3>
+                        <h3 class="card-title">A personal budget set aside as a financial safety net for future mishaps or unexpected expenses.</h3>
                     </div>
                 </div>
             </div>
@@ -36,12 +64,26 @@
 
         <div class="col">
             <div class="col-md">
-                <div class="card text-center text-white  mb-3" id="assignment-rn">
+                <div class="card text-center  mb-3" id="assignment-rn">
                     <div class="card-header">
-                        <h5 class="card-title" style="color: black">Your Budget, Emergency Funds Estimation</h5>
+                        <h5 class="card-title" style="color: black">Your Budget, Emergency Funds Estimation ($)</h5>
                     </div>
                     <div class="card-body">
-                        <h3 class="card-title"></h3>
+                        <h3 class="card-title">
+                            Lifestyle : ${{ lifestyle }}
+                        </h3>
+                        <h3 class="card-title">
+                            Housing : ${{ housing }}
+                        </h3>
+                        <h3 class="card-title">
+                            Dietary : ${{ food }}
+                        </h3>
+                        <h3 class="card-title">
+                            Remaining Funds : ${{ remaining_funds }}
+                        </h3>
+                        <h3 class="card-title">
+                            Emergency Funds : ${{ emergency_funds }}
+                        </h3>
                     </div>
                 </div>
             </div>
@@ -54,48 +96,10 @@
     <div class="row">
         <div class="col">
             <div class="col-md">
-                <h5>Data Input</h5>
+{#                <h5>Data Input</h5>#}
                 <hr>
                 <div class="card card-body">
-                    {% if name %}
-                        <h4>Name: <br> {{ name }}</h4>
-                    {% endif %}
-                <br>
-                    {% if age %}
-                        <h4>Age: <br> {{ age }}</h4>
-                    {% endif %}
-                <br>
-                    {% if city %}
-                        <h4>City: <br> {{ city }}</h4>
-                    {% endif %}
-                <br>
-                    {% if income %}
-                        <h4>Income: <br> {{ income }}</h4>
-                    {% endif %}
-                <br>
-                    {% if q1 %}
-                        <h4>Parental Support?: <br> {{ q1 }}</h4>
-                    {% endif %}
-                <br>
-                    {% if support %}
-                        <h4>Parental Support Amount: <br> {{ support }}</h4>
-                    {% endif %}
-                <br>
-                    {% if familiar %}
-                        <h4>Knowledge in Trading / Investment: <br> {{ familiar }}</h4>
-                    {% endif %}
-                <br>
-                    {% if major %}
-                        <h4>Field of Study: <br> {{ major }}</h4>
-                    {% endif %}
-                <br>
-                    {% if house %}
-                        <h4>House Plan: <br> {{ house }}</h4>
-                    {% endif %}
-                <br>
-                    {% if food %}
-                        <h4>Dietary: <br> {{ food }}</h4>
-                    {% endif %}
+                   <img src="{% static 'images/money.jpg' %}" style=" height: 230px">
 
                 </div>
             </div>
@@ -103,9 +107,145 @@
 
         <div class="col">
             <div class="col-md">
-                <h5>Graph</h5>
+                <h5 style="text-align: center">Monthly Expense Breakdown</h5>
                 <hr>
                 <div class="card card-body">
+
+                    <canvas id="myChart"></canvas>
+                    <script>
+                        var ctx = document.getElementById('myChart').getContext('2d');
+                        var myDoughnutChart = new Chart(ctx, {
+                            type: 'doughnut',
+                            data : {
+                                datasets: [{
+                                        label: 'Monthly Expense Breakdown',
+                                        data: {{ list|safe }},
+                                        backgroundColor: [
+                                            'rgb(217,3,3)',
+                                        'rgb(0,100,224)',
+                                        'rgb(203,172,0)',
+                                        'rgb(0,179,139)',
+                                            'rgb(4,4,33)',
+                                        ]
+                                    }],
+
+                                    // These labels appear in the legend and in the tooltips when hovering different arcs
+                                    labels: [
+                                        'Lifestyle',
+                                        'Housing',
+                                        'Dietary',
+                                        'Remaining Funds',
+                                        'Emergency Funds'
+                                    ]
+                                },
+                            options: {},
+                        });
+                    </script>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<hr><hr>
+<br><br><br>
+{#<br style="background-color: #d6d7e5"><br style="background-color: #d6d7e5"><br style="background-color: #d6d7e5"><br style="background-color: #d6d7e5"><br style="background-color: #d6d7e5"><br style="background-color: #d6d7e5">#}
+<div class="container-fluid" style="max-width: 1600px; margin-top: 5vh; background-color: #d6d7e5">
+    <h1 style="text-align: center" id="ML">Stocks</h1><br><br>
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center  mb-3" id="total-assignments">
+                    <div class="card-header">
+                        <h5 class="card-title">Trading / Investing</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">Trading refers to the buying and selling of securities, such as the purchase of stock on the floor of the New York Stock Exchange (NYSE).</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center  mb-3" id="assignment-rn">
+                    <div class="card-header">
+                        <h5 class="card-title" style="color: black">Recommended Stocks</h5>
+                    </div>
+                    <div class="card-body">
+                        <table class="table table-sm">
+                            <tr>
+                                <th>Ticker</th>
+                            </tr>
+                            {% for i in listtwo %}
+                            <tr>
+
+                                <td>
+                                    {{ i }}
+                                </td>
+
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+{#                <h5>Data Input</h5>#}
+                <hr>
+                <div class="card card-body">
+                   <img src="{% static 'images/stock.gif' %}" style="width: 100%">
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <h5 style="text-align: center">Useful Links to Study</h5>
+                <hr>
+                <div class="card card-body">
+
+                    <h4>
+                        A Beginner’s Guide to Stock Investing,” Investopedia, 2021 : <br>
+                        <a onclick="location.href='https://www.investopedia.com/articles/basics/06/invest1000.asp'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        A. O’Shea, “Stock Market Basics: What Beginner Investors Should Know,” NerdWallet, Jun. 19, 2017 : <br>
+                        <a onclick="location.href='https://www.nerdwallet.com/article/investing/stock-market-basics-everything-beginner-investors-know'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        10 Great Ways to Learn Stock Trading in 2021 - StockTrader.com : <br>
+                        <a onclick="location.href='https://www.stocktrader.com/learn-stock-trading/'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        Stock Market Basics: A Beginner’s Guide to Trading Stocks : <br>
+                        <a onclick="location.href='https://www.dailyfx.com/education/understanding-the-stock-market/stock-market-basics.html'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        Wealthsimple: Get Rich Slow | Invest, Save, Spend & File Taxes : <br>
+                        <a onclick="location.href='https://www.wealthsimple.com/en-ca/'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        FINVIZ.com - Stock Screener : <br>
+                        <a onclick="location.href='https://finviz.com/'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        FactSet | Integrated Financial Data and Software Solutions for Investment Professionals : <br>
+                        <a onclick="location.href='https://www.factset.com/'" class="contlink">Click to access</a><br>
+                    </h4><br><hr>
+                    <h4>
+                        S&P Global Market Intelligence : <br>
+                        <a onclick="location.href='https://www.spglobal.com/marketintelligence/en/'" class="contlink">Click to access</a><br>
+                    </h4>
 
                 </div>
             </div>

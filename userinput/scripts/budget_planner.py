@@ -11,17 +11,16 @@ Original file is located at
 
 import json
 import pandas as pd
-from json import load
 
-with open("C:\\Users\\kimmc\\Desktop\\savingsio\\Savings.io\\userinput\\merged.json") as f:
+with open('userinput//scripts//merged.json') as f:
     data = json.load(f)
 
 df_original = pd.DataFrame.from_records(data["data"], columns=["name", "country","cost_of_living_index","rent_index","cost_of_living_plus_rent_index","groceries_index","local_purchasing_power_index","restaurant_price_index","us_state","cost_of_living_details"])
 df_original.drop('cost_of_living_details', axis =1, inplace=True)
-df_original
 
-df = pd.read_json("C:\\Users\\kimmc\\Desktop\\savingsio\\Savings.io\\userinput\\merged.json")
-df
+
+df = pd.read_json('userinput//scripts//merged.json')
+
 
 data_list = []
 labels = []
@@ -39,11 +38,11 @@ new_df = pd.DataFrame(data = data_list, columns = labels)
 
 raw_df = pd.concat([df_original, new_df], axis =1)
 raw_df = raw_df.set_index('name')
-raw_df
+
 
 # Drop unncessary columns
 
-raw_df.columns
+
 
 raw_df.drop(['Preschool (or Kindergarten), Full Day, Private, Monthly for 1 Child', 'International Primary School, Yearly for 1 Child', 'Tennis Court Rent (1 Hour on Weekend)', 'Cigarettes 20 Pack (Marlboro)', '1 min. of Prepaid Mobile Tariff Local (No Discounts or Plans)', 'us_state'], axis = 1, inplace = True)
 
@@ -51,7 +50,7 @@ raw_df_int = raw_df[list(raw_df.columns)[1:]].apply(pd.to_numeric)
 raw_df_first_col = raw_df['country']
 raw_df = pd.concat([raw_df_first_col, raw_df_int], axis = 1)\
 
-raw_df
+
 
 CLOTHING_WEIGHT = 0.35
 SPORTS_AND_LEISURE_WEIGHTS = [2.3, 6]
@@ -63,51 +62,52 @@ def calculate_budget(city, income, housing, dietary):
 
   emergency_funds = 0
   current_income = income
-  ## CATEGORIES ##
+  ## CATEGORIES ## 
   clothing_and_shoes = raw_df.loc[city]['1 Pair of Jeans (Levis 501 Or Similar)']*CLOTHING_WEIGHT + raw_df.loc[city]['1 Summer Dress in a Chain Store (Zara, H&M, ...)']*CLOTHING_WEIGHT + raw_df.loc[city][ '1 Pair of Nike Running Shoes (Mid-Range)']*CLOTHING_WEIGHT + raw_df.loc[city]['1 Pair of Men Leather Business Shoes']*CLOTHING_WEIGHT
 
   sports_and_leisure = raw_df.loc[city]['Fitness Club, Monthly Fee for 1 Adult']*SPORTS_AND_LEISURE_WEIGHTS[0] + raw_df.loc[city]['Cinema, International Release, 1 Seat']*SPORTS_AND_LEISURE_WEIGHTS[1]
-
+  
   utilities = raw_df.loc[city]['Fitness Club, Monthly Fee for 1 Adult']*UTILITIES[0] + raw_df.loc[city]['Fitness Club, Monthly Fee for 1 Adult']*UTILITIES[0] + raw_df.loc[city]['Internet (60 Mbps or More, Unlimited Data, Cable/ADSL)']*UTILITIES[1]
 
   markets = int(raw_df.loc[city]['Milk (regular), (1 liter)'])*MARKETS[0] + int(raw_df.loc[city]['Loaf of Fresh White Bread (500g)'])*MARKETS[1] + int(raw_df.loc[city]['Rice (white), (1kg)'])*MARKETS[2] + int(raw_df.loc[city]['Eggs (regular) (12)'])*MARKETS[3] + int(raw_df.loc[city]['Local Cheese (1kg)'])*MARKETS[4] + int(raw_df.loc[city]['Chicken Fillets (1kg)'])*MARKETS[5] + int(raw_df.loc[city]['Beef Round (1kg) (or Equivalent Back Leg Red Meat)'])*MARKETS[6] + int(raw_df.loc[city]['Apples (1kg)'])*MARKETS[7] + int(raw_df.loc[city]['Banana (1kg)'])*MARKETS[8] + int(raw_df.loc[city]['Oranges (1kg)'])*MARKETS[9] + int(raw_df.loc[city]['Tomato (1kg)'])*MARKETS[10] + int(raw_df.loc[city]['Potato (1kg)'])*MARKETS[11] + int(raw_df.loc[city]['Onion (1kg)'])*MARKETS[12] + int(raw_df.loc[city]['Lettuce (1 head)'])*MARKETS[13] + int(raw_df.loc[city]['Water (1.5 liter bottle)'])*MARKETS[14] + int(raw_df.loc[city]['Bottle of Wine (Mid-Range)'])*MARKETS[15] + int(raw_df.loc[city]['Domestic Beer (0.5 liter bottle)'])*MARKETS[16]
 
-
-  current_income -= (clothing_and_shoes + sports_and_leisure +  utilities)
-
-
+  
+  current_income -= clothing_and_shoes
+  current_income -= sports_and_leisure
+  current_income -= utilities
+  
   # HOUSING
-
-  if housing == 'Apartment (1 bedroom) in City Centre':
+  
+  if housing == '1 Room Apartment Downtown':
     current_income -= raw_df.loc[city]['Apartment (1 bedroom) in City Centre']*HOUSING
     rents_and_apartments = raw_df.loc[city]['Apartment (1 bedroom) in City Centre']*HOUSING
-
-  if housing == 'Apartment (1 bedroom) Outside of Centre':
+  
+  if housing == '1 Room Apartment (outside city)':
     current_income -= raw_df.loc[city]['Apartment (1 bedroom) Outside of Centre']*HOUSING
     rents_and_apartments =  raw_df.loc[city]['Apartment (1 bedroom) Outside of Centre']*HOUSING
+  
 
-
-  if housing == 'Apartment (Shared Room in a 3 Bedrooms Apartment) in City Centre':
+  if housing == '3 Room Apartment Shared Downtown':
     current_income -=  raw_df.loc[city]['Apartment (Shared Room in a 3 Bedrooms Apartment) in City Centre']*HOUSING
     rents_and_apartments = raw_df.loc[city]['Apartment (Shared Room in a 3 Bedrooms Apartment) in City Centre']*HOUSING
+  
 
-
-  if housing == 'Apartment (Shared Room in a 3 Bedrooms Apartment) Outside of Centre':
+  if housing == '3 Room Apartment Shared (outside city)':
     current_income -= raw_df.loc[city]['Apartment (Shared Room in a 3 Bedrooms Apartment) Outside of Centre']*HOUSING
     rents_and_apartments = raw_df.loc[city]['Apartment (Shared Room in a 3 Bedrooms Apartment) Outside of Centre']*HOUSING
 
 
   # DIETARY
 
-  if dietary == 'Meal, Inexpensive Restaurant':
+  if dietary == 'Yes - I eat at inexpensive places':
     current_income -=  raw_df.loc[city]['Meal, Inexpensive Restaurant']*16 + raw_df.loc[city]['McMeal at McDonalds (or Equivalent Combo Meal)']*6 +  raw_df.loc[city]['Coke/Pepsi (0.33 liter bottle)']*6 + raw_df.loc[city]['Water (0.33 liter bottle)']
     foodstuffs =  raw_df.loc[city]['Meal, Inexpensive Restaurant']*16 + raw_df.loc[city]['McMeal at McDonalds (or Equivalent Combo Meal)']*6 +  raw_df.loc[city]['Coke/Pepsi (0.33 liter bottle)']*6 + raw_df.loc[city]['Water (0.33 liter bottle)']
 
-  if dietary == 'Meal for 2 People, Mid-range Restaurant, Three-course':
+  if dietary == 'Yes - I eat at mid-tier places':
     current_income -=   raw_df.loc[city]['Meal for 2 People, Mid-range Restaurant, Three-course']*16 + raw_df.loc[city]['Domestic Beer (0.5 liter draught)']*5 + raw_df.loc[city]['raw_df.loc[city]']*5 +  raw_df.loc[city]['Meal for 2 People, Mid-range Restaurant, Three-course']['Cappuccino (regular)']*15
     foodstuffs =  raw_df.loc[city]['Meal for 2 People, Mid-range Restaurant, Three-course']*16 + raw_df.loc[city]['Domestic Beer (0.5 liter draught)']*5 + raw_df.loc[city]['raw_df.loc[city]']*5 +  raw_df.loc[city]['Meal for 2 People, Mid-range Restaurant, Three-course']['Cappuccino (regular)']*15
-
-  if dietary == 'Home':
+  
+  if dietary == 'No':
     current_income -= markets
     foodstuffs = markets
 
@@ -115,14 +115,12 @@ def calculate_budget(city, income, housing, dietary):
 
   lifestyle = sports_and_leisure + clothing_and_shoes
   housing = rents_and_apartments + utilities
-  food = foodstuffs
-  emergency_funds = current_income
+  food = foodstuffs 
+  remaining_funds = current_income
+  emergency_funds = remaining_funds*0.2
 
 
 
-  # returns an array
+  # returns an array 
 
-  return [lifestyle, housing, food, emergency_funds]
-
-# def hello():
-#   print("helloworld")
+  return [lifestyle, housing, food, remaining_funds, emergency_funds]
