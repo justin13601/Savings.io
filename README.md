@@ -4,7 +4,9 @@
 
 # Savings.io
 
-The COVID-19 pandemic has. Along with the whatever.
+The COVID-19 pandemic has forever changed the lives of billions of people across the world. As a direct result of the economic shutdown that followed the pandemic, the unemployment rate in Canada more than doubled from 5.6% in February 2020 to a record high 13.7% in May 2020 [1]. With so many jobs lost, many people found themselves without their pre-pandemic financial support. 
+
+Additionally, along with the ever-increasing popularity of freelance work amongst students, it is all-the-more important to.
 
 [![Python](https://ForTheBadge.com/images/badges/made-with-python.svg)](https://colab.research.google.com/)
 
@@ -32,8 +34,8 @@ The COVID-19 pandemic has. Along with the whatever.
 ***Features:***
 - Uses NUMBEO Cost of Living Dataset
 - Provides suggestions on monthly amount in CAD to save towards an emergency fund
-- News scrubbing for stocks
-- Sentiment analysis for investment portfolio
+- News scrubbing for US stocks via FinViz
+- Sentiment analysis for investment portfolio using VADER
 - Displays resources for students to increase their financial literacy
 - Python 3.6.10
 
@@ -52,4 +54,8 @@ Run webapp server:
 
     python manage.py runserver
 
-Access webapp at localhost address.
+Access webapp at indicated localhost address.
+
+
+## References
+[1] Government of Canada, Statistics Canada, “The Daily — Labour Force Survey, September 2020,” Statcan.gc.ca, 2020. https://www150.statcan.gc.ca/n1/daily-quotidien/201009/dq201009a-eng.htm (accessed Feb. 21, 2021).
