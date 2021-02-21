@@ -37,6 +37,10 @@ def prompt(request):
         'income': income,
         'q1': q1,
         'support': support,
+        'familiar': familiar,
+        'major': major,
+        'house' : house,
+        'food': food,
     }
 
     return context
