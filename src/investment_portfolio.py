@@ -94,7 +94,6 @@ def query_tickers(industry):
     df = df[df.Recommendations != 0]
     df.sort_values(by=['Recommendations'], ascending=True)
 
-    ################# add in trading experience ################
     # filter based on recommendation value
     df_buy = df[df.Recommendations <= 1.5]
     df_sell = df[df.Recommendations >= 4.5]
@@ -103,6 +102,14 @@ def query_tickers(industry):
     # combine dataframes (for experienced investor who understands buys/sells/holds)
     df_final = pd.concat([df_hold, df_buy, df_sell])
     df_final.reset_index(level=0, inplace=True)
+
+    if df_final.empty:
+        df_buy = df[df.Recommendations <= 2]
+        df_sell = df[df.Recommendations >= 4]
+        df_hold = df[df.Recommendations == 3]
+
+        df_final = pd.concat([df_hold, df_buy, df_sell])
+        df_final.reset_index(level=0, inplace=True)
 
     return df_final
 
