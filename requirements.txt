@@ -4,3 +4,5 @@ matplotlib
 yahoo-fin
 bs4
 nltk
+pandas_datareader
+twython

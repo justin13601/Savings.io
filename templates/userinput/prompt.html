@@ -1,0 +1,241 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Budget Planner</title>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <link href="//fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/promptstyle.css' %}">
+</head>
+<body>
+<img id="first-image" src="{% static 'images/nature.jpg' %}" style="width: 80%; margin-left: 10%; background-blend-mode: darken;">
+<br><br><br><br>
+<h1 class="opening" style="text-align: center">Welcome to Savings.io!</h1>
+<h3 style="text-align: center">We've built an educational tool to help you strategically save towards an emergency fund</h3>
+<br>
+<h5 style="font-size: 20px; text-align: center">Click on questions to answer</h5>
+
+<hr style="width: 80%; margin-left: 10%">
+<div class="upform">
+  <form method="POST" action="{% url 'home' %}">{% csrf_token %}
+{#    <div class="upform-header"></div>#}
+    <div class="upform-main">
+        <div class="input-block">
+        <div class="label">Welcome! What is your name? (Answer Optional)</div>
+        <div class="input-control">
+          <input type="text" autocomplete="off" name="name">
+        </div>
+      </div>
+
+        <div class="input-block">
+        <div class="label">How old are you? (Answer Optional)</div>
+        <div class="input-control">
+          <input type="text" autocomplete="off" name="age">
+        </div>
+      </div>
+
+        <div class="input-block">
+        <div class="label">Which city do you live in?</div>
+        <div class="input-control">
+          <input type="text" class="required" autocomplete="off" name="city">
+        </div>
+      </div>
+
+        <div class="input-block">
+        <div class="label">What is your income? (In CAD)</div>
+        <div class="input-control">
+          <input type="text" class="required" autocomplete="off" name="income">
+        </div>
+      </div>
+
+      <div class="input-block">
+        <div class="label">Do you receive any parental financial support?</div>
+        <div class="input-control">
+          <input id="toggle-on-q1" class="toggle toggle-left" name="q1" value="yes" type="radio">
+          <label for="toggle-on-q1" class="btn"><span>A</span> Yes</label>
+          <input id="toggle-off-q1" class="toggle toggle-right" name="q1" value="no" type="radio">
+          <label for="toggle-off-q1" class="btn"><span>B</span> No</label>
+        </div>
+      </div>
+
+      <div class="input-block">
+        <div class="label">If so, please input the approximate amount</div>
+        <div class="input-control">
+          <input type="text" autocomplete="off" name="support">
+        </div>
+      </div>
+
+        <div class="input-block">
+            <div class="label">How familiar are you with trading/investment?</div>
+            <br>
+            <label>
+                <ul class="likert1">
+                    <li>
+                        <input type="radio" name="likert1" value="Really familiar">
+                        <label>Really familiar</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert1" value="Familiar">
+                        <label>Familiar</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert1" value="Normal">
+                        <label>Normal</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert1" value="Not really">
+                        <label>Not really</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert1" value="Not at all">
+                        <label>Not at all</label>
+                      </li>
+                </ul>
+            </label>
+        </div>
+
+        <div class="input-block">
+            <div class="label">Please select your university major</div>
+            <br>
+            <select name="major" id="major" style="height: 50px; width: 600px">
+                <option value="" selected="selected">Select your major</option>
+                <option value="Business & Commerce">Business & Commerce</option>
+                <option value="Healthcare Professions & Pharmacology Programs">Healthcare Professions & Pharmacology Programs</option>
+                <option value="Social Sciences & History">Social Sciences & History</option>
+                <option value="Biological & Biomedical Sciences">Biological & Biomedical Sciences</option>
+                <option value="Engineering & Technology">Engineering & Technology</option>
+                <option value="Energy & Infrastructure">Energy & Infrastructure</option>
+                <option value="Communication, Journalism & Related Programs">Communication, Journalism & Related Programs</option>
+            </select>
+        </div>
+
+
+        <div class="input-block">
+            <div class="label">What kind of housing do you live in right now?</div>
+            <br>
+            <select name="house" id="house" style="height: 50px; width: 600px">
+                <option value="" selected="selected">Select your housing type</option>
+                <option value="1 Room Apartment Downtown">1 Room Apartment Downtown</option>
+                <option value="1 Room Apartment (outside city)">1 Room Apartment (outside city)</option>
+                <option value="3 Room Apartment Shared Downtown">3 Room Apartment Shared Downtown</option>
+                <option value="3 Room Apartment Shared (outside city)">3 Room Apartment Shared (outside city)</option>
+            </select>
+        </div>
+
+        <div class="input-block">
+            <div class="label">Do you prefer to eat outside?</div>
+            <br>
+            <label>
+                <ul class="likert2">
+                    <li>
+                        <input type="radio" name="likert2" value="Yes - I eat at fancy places">
+                        <label>Yes - I eat at fancy places</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert2" value="Yes - I eat at mid-tier places">
+                        <label>Yes - I eat at mid-tier places</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert2" value="Yes - I eat at inexpensive places">
+                        <label>Yes - I eat at inexpensive places</label>
+                      </li>
+                      <li>
+                        <input type="radio" name="likert2" value="No">
+                        <label>No</label>
+                      </li>
+                </ul>
+            </label>
+        </div>
+
+    </div>
+
+      <div class="upform-footer" style="text-align: center">
+      <input type="submit" class="btn btn-primary btn-lg">
+    </div>
+  </form>
+</div>
+
+
+<script>
+
+    $.fn.upform = function() {
+  var $this = $(this);
+  var container = $this.find(".upform-main");
+
+    $(container).on('keyup keypress', function(e) {
+  var keyCode = e.keyCode || e.which;
+  if (keyCode === 13) {
+    e.preventDefault();
+    return false;
+  }
+});
+
+  $(container)
+    .find(".input-block")
+    .not(".input-block input")
+    .on("click", function() {
+    rescroll(this);
+  });
+
+  $(container).find(".input-block input").keypress(function(e) {
+    if (e.which == 13) {
+      if ($(this).hasClass("required") && $(this).val() == "") {
+      } else moveNext(this);
+    }
+  });
+
+  $(container).find('.input-block input[type="radio"]').change(function(e) {
+    moveNext(this);
+  });
+
+  $(window).on("scroll", function() {
+    $(container).find(".input-block").each(function() {
+      var etop = $(this).offset().top;
+      var diff = etop - $(window).scrollTop();
+
+      if (diff > 100 && diff < 300) {
+        reinitState(this);
+      }
+    });
+  });
+
+  function reinitState(e) {
+    $(container).find(".input-block").removeClass("active");
+
+    $(container).find(".input-block input").each(function() {
+      $(this).blur();
+    });
+    $(e).addClass("active");
+    /*$(e).find('input').focus();*/
+  }
+
+  function rescroll(e) {
+    $(window).scrollTo($(e), 200, {
+      offset: { left: 100, top: -200 },
+      queue: false
+    });
+  }
+
+  function reinit(e) {
+    reinitState(e);
+    rescroll(e);
+  }
+
+  function moveNext(e) {
+    $(e).parent().parent().next().click();
+  }
+
+  function movePrev(e) {
+    $(e).parent().parent().prev().click();
+  }
+};
+
+$(".upform").upform();
+</script>
+</body>
+</html>
