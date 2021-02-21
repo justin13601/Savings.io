@@ -1,4 +1,4 @@
-![Savings.io](/meta_images/logo.png)
+![Savings.io](/imgs/logo.png)
 
 ---------  
 
