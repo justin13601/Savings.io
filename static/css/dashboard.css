@@ -1,5 +1,5 @@
 body{
-    background: #2365b0;
+    background: #0e3560;
 }
 
 ::-webkit-scrollbar {
@@ -18,8 +18,10 @@ body{
 
 .box {
     width: 100%;
-    height: 80vh;
+    height: 90vh;
+    position: absolute;
     bottom: 0;
+    left: 0;
     background-color: white;
 }
 
@@ -53,6 +55,10 @@ body{
 #r1 #r1text {
     margin-top: -10px;
     font-size: 30px;
+}
+
+#r1 #firstpic {
+    width: 100%;
 }
 
 #r2 {
