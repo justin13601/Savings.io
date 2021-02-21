@@ -6,21 +6,115 @@
     <meta charset="UTF-8">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
 </head>
 <body>
-<h1 class="nametitle">{{ name }}'s portfolio</h1>
+<div class="top" style="background: #0e3560; height: 10vh; text-align: center; padding: 20px">
+{% if name %}
+    <h1 class="nametitle">{{ name }}'s portfolio</h1>
+{% else %}
+    <h1 class="nametitle">Your portfolio</h1>
+{% endif %}</div>
 <div class="box"></div>
-<div class="categories">
-    <div id="r1">
-        <h1 id="r1text">Budget Planner <br> + <br> Emergency Funds Estimation</h1>
+
+<div class="container-fluid" style="max-width: 1600px; margin-top: 5vh">
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center  mb-3" id="total-assignments">
+                    <div class="card-header">
+                        <h5 class="card-title">Emergency Funds?</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title">a personal budget set aside as a financial safety net for future mishaps or unexpected expenses.</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <div class="card text-center text-white  mb-3" id="assignment-rn">
+                    <div class="card-header">
+                        <h5 class="card-title" style="color: black">Your Budget, Emergency Funds Estimation</h5>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="card-title"></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
-    <div id="r2">
-        <h1 id="r2text">Investment List</h1>
-    </div>
-    <div id="r3">
-        <h1 id="r3text">Sources</h1>
+
+    <br>
+
+    <div class="row">
+        <div class="col">
+            <div class="col-md">
+                <h5>Data Input</h5>
+                <hr>
+                <div class="card card-body">
+                    {% if name %}
+                        <h4>Name: <br> {{ name }}</h4>
+                    {% endif %}
+                <br>
+                    {% if age %}
+                        <h4>Age: <br> {{ age }}</h4>
+                    {% endif %}
+                <br>
+                    {% if city %}
+                        <h4>City: <br> {{ city }}</h4>
+                    {% endif %}
+                <br>
+                    {% if income %}
+                        <h4>Income: <br> {{ income }}</h4>
+                    {% endif %}
+                <br>
+                    {% if q1 %}
+                        <h4>Parental Support?: <br> {{ q1 }}</h4>
+                    {% endif %}
+                <br>
+                    {% if support %}
+                        <h4>Parental Support Amount: <br> {{ support }}</h4>
+                    {% endif %}
+                <br>
+                    {% if familiar %}
+                        <h4>Knowledge in Trading / Investment: <br> {{ familiar }}</h4>
+                    {% endif %}
+                <br>
+                    {% if major %}
+                        <h4>Field of Study: <br> {{ major }}</h4>
+                    {% endif %}
+                <br>
+                    {% if house %}
+                        <h4>House Plan: <br> {{ house }}</h4>
+                    {% endif %}
+                <br>
+                    {% if food %}
+                        <h4>Dietary: <br> {{ food }}</h4>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col">
+            <div class="col-md">
+                <h5>Graph</h5>
+                <hr>
+                <div class="card card-body">
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+
+
 
 </body>
 </html>

@@ -1,11 +1,26 @@
 from django.shortcuts import render
+from .budget_planner import *
 
 # Create your views here.
 def first(request):
     return render(request,'userinput/prompt.html')
 
 def home(request):
-    return render(request, 'home.html', prompt(request))
+    dict = prompt(request)
+    city = dict['city']
+    income = dict['income']
+    house = dict['house']
+    food = dict['food']
+    lis = calculate_budget(city, income, house, food)
+
+    context = {
+        'lifestyle': lis[0],
+        'hosing': lis[1],
+        'food': lis[2],
+        'emergencyfunds': lis[3],
+    }
+
+    return render(request, 'home.html', context)
 
 def prompt(request):
     name = request.POST.get('name')
