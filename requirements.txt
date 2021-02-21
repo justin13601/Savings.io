@@ -1,0 +1,6 @@
+numpy
+pandas
+matplotlib
+yahoo-fin
+bs4
+nltk
