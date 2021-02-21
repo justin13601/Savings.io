@@ -31,7 +31,7 @@ Savings.io is a webapp designed to strategically help students and others set as
 - Pandas-Datareader
 - Twython
 
-***Features:***
+## Features: 
 - Uses NUMBEO Cost of Living Dataset
 - Provides suggestions on monthly amount in CAD to save towards an emergency fund
 - News scrubbing for US stocks via FinViz
