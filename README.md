@@ -1,4 +1,4 @@
-![Savings.io](/imgs/logo.png)
+![Savings.io](/imgs/savings_logo.png)
 
 ---------  
 
