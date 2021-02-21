@@ -16,9 +16,41 @@ nltk.download('vader_lexicon')
 
 
 def query_tickers(industry):
-    ################# add in ticker interests based on major ################
     # load tickers
-    tickers = si.tickers_dow()
+    dow = si.tickers_dow()
+    dow_set = set(dow)
+    if industry == "Business & Commerce": 
+        companies = ["AMZN","TSLA","HD","LOW","MCD","SBUX","NKE","WMT","COST","PG","PEP","KO"]
+        companies_set = set(companies)
+        non_dupes = list(companies_set - dow_set)
+        tickers = dow + non_dupes
+    elif industry == "Healthcare Professions & Pharmacology Programs":
+        companies = ["JNJ","MRK","ABBV","PFE","LLY","AMGN","GILD","ABT","TMO","DHR","REGN","UNH"]
+        companies_set = set(companies)
+        non_dupes = list(companies_set - dow_set)
+        tickers = dow + non_dupes
+    elif industry == "Biological & Biomedical Sciences":
+        companies = ["AMZN","TSLA","HD","LOW","MCD","SBUX","NKE","WMT","COST","PG","PEP","KO"]
+        companies_set = set(companies)
+        non_dupes = list(companies_set - dow_set)
+        tickers = dow + non_dupes
+    elif industry == "Engineering & Technology":
+        companies = ["AMAT","TSLA","ADBE","CSCO","NVDA","AVGO","IBM","AMD","TXN","QCOM","INTC","CRM"]
+        companies_set = set(companies)
+        non_dupes = list(companies_set - dow_set)
+        tickers = dow + non_dupes
+    elif industry == "Energy & Infrastructure":
+        companies = ["XOM","CVX","COP","EOG","PSX","MPC","SPG","NEE","DUK","LIN","APD","SRE"]
+        companies_set = set(companies)
+        non_dupes = list(companies_set - dow_set)
+        tickers = dow + non_dupes
+    elif industry == "Communication, Journalism & Related Programs":
+        companies = ["GOOGL","FB","T","VZ","TMUS","ATVI","NFLX","DIS","CMCSA","CHTR","EA","LYV"]
+        companies_set = set(companies)
+        non_dupes = list(companies_set - dow_set)
+        tickers = dow + non_dupes
+    else:
+        tickers = dow
 
     yahoo_recommendations = []
 
@@ -148,15 +180,6 @@ def print_results(df_results):
     return
 
 
-'''
-Business & Commerce
-Healthcare Professions & Pharmacology Programs
-Social Sciences & History
-Biological & Biomedical Sciences
-Engineering & Technology
-Energy & Infrastructure
-Communication, Journalism & Related Programs
-'''
 if __name__ == "__main__":
     tickers = query_tickers(None)
     news = scrub_news(tickers)
