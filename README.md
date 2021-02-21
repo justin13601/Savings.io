@@ -4,9 +4,9 @@
 
 # Savings.io
 
-The COVID-19 pandemic has forever changed the lives of billions of people across the world. As a direct result of the economic shutdown that followed the pandemic, the unemployment rate in Canada more than doubled from 5.6% in February 2020 to a record high 13.7% in May 2020 [1]. With so many jobs lost, many people found themselves without their pre-pandemic financial support. 
+The COVID-19 pandemic has forever changed the lives of billions of people across the world. As a direct result of the economic shutdown that followed the pandemic, the unemployment rate in Canada more than doubled from 5.6% in February 2020 to a record high 13.7% in May 2020 [1]. With so many jobs lost, many people found themselves without their pre-pandemic financial support. An emergency savings fund that one would accumulate throughout their career can drastically reduce the financial impacts of such a disaster. Additionally, along with the ever-increasing popularity of freelance work amongst students, it is all-the-more important to cultivate a sense of financial literacy with savings and investments.
 
-Additionally, along with the ever-increasing popularity of freelance work amongst students, it is all-the-more important to.
+Savings.io is a webapp designed to strategically help students and others set aside a small amount of money each month towards an emergency savings fund. It also advocates for financial education
 
 [![Python](https://ForTheBadge.com/images/badges/made-with-python.svg)](https://colab.research.google.com/)
 
