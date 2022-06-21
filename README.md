@@ -12,6 +12,8 @@ Savings.io is a webapp designed to strategically help students and others set as
 
 ![License](https://img.shields.io/github/license/justin13601/AICancer) [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/justin13601/Savings.io/HEAD?filepath=%2Fnotebooks%2Finvestment_portfolio.ipynb)
 
+[![DOI](https://zenodo.org/badge/340813920.svg)](https://zenodo.org/badge/latestdoi/340813920)
+
 **Credits:**
 - https://github.com/kimmc6008
 - https://github.com/dreamspeedrun
